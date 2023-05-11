@@ -1,9 +1,10 @@
 const prompt = require('prompt-sync')()
 console.clear()
 
-let alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-                'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+                'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 let incorrect = []
+let wrongCount = 0
 
 main()
 
@@ -11,7 +12,9 @@ main()
 function mainMenu () {
     let menuChoice = 0
 
-    console.log(`
+    while (!(menuChoice >= 1) || !(menuChoice <= 3)) {
+        console.clear()
+        console.log(`
  _    _
 | |  | |                                        
 | |__| | __ _ _ __   __ _ _ __ ___   __ _ _ __  
@@ -27,18 +30,14 @@ function mainMenu () {
             3   Totally random!
 
 `)
-    menuChoice = prompt('Please enter number of menu selection: ')
-
-    if (!(menuChoice >= 1) || !(menuChoice <= 3)) {
-        console.clear()
-        mainMenu()
-    } else {
-        return menuChoice
+        menuChoice = prompt('Please enter number of menu selection: ')
     }
+    return menuChoice
 }
 
 
 function getWords (menuNum) {
+    console.log(menuNum)
     switch (menuNum) {
         case '1':
             return enterWords()
@@ -46,45 +45,181 @@ function getWords (menuNum) {
             return 'category'
         case '3':
             return 'random'
-        default:
-            console.log('Invalid word')
+        //default:
+          //  console.log('Invalid word')
     }
 }
+
 
 function enterWords () {
     // needs punctuation/number checks
     let guessInfo = {}
-    guessInfo.words = prompt('Please enter text to be guessed: ')
+    guessInfo.words = prompt('Please enter text to be guessed: ').toUpperCase()
     guessInfo.category = prompt('Please enter category of entry (optional): ')
     return guessInfo
 }
 
-function playGame (guessObj) {
-    
+
+function printHangman (wrongCount) {
+    console.log(wrongCount)
+    switch (wrongCount) {
+        case 0:
+            console.log(`
+            ___________________________
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |___________________________|
+   
+            `)
+        case 1:
+            console.log(`
+            ___________________________
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |                           |
+           |    ___________________    |
+           |___________________________|
+   
+            `)
+        case 2:
+            console.log(`
+            ___________________________
+           |                           |
+           |                           |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |    ____|______________    |
+           |___________________________|
+   
+            `)
+        case 3:
+            console.log(`
+            ___________________________
+           |                           |
+           |        __________         |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |    ____|______________    |
+           |___________________________|
+   
+            `)
+        case 4:
+            console.log(`
+            ___________________________
+           |                           |
+           |        __________         |
+           |        | /                |
+           |        |/                 |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |    ____|______________    |
+           |___________________________|
+   
+            `)
+        case 5:
+            console.log(`
+            ___________________________
+           |                           |
+           |        __________         |
+           |        | /      |         |
+           |        |/                 |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |    ____|______________    |
+           |___________________________|
+   
+            `)
+        case 6:
+            console.log(`
+            ___________________________
+           |                           |
+           |        __________         |
+           |        | /      |         |
+           |        |/       0         |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |    ____|______________    |
+           |___________________________|
+   
+            `)
+        case 7:
+            console.log(`
+            ___________________________
+           |                           |
+           |        __________         |
+           |        | /      |         |
+           |        |/       0         |
+           |        |     ---|---      |
+           |        |        |         |
+           |        |                  |
+           |        |                  |
+           |        |                  |
+           |    ____|______________    |
+           |___________________________|
+   
+            `)
+        case 8:
+            console.log(`
+            ___________________________
+           |                           |
+           |        __________         |
+           |        | /      |         |
+           |        |/       0         |
+           |        |     ---|---      |
+           |        |        |         |
+           |        |       / \\        |
+           |        |      /   \\       |
+           |        |                  |
+           |    ____|______________    |
+           |___________________________|
+   
+            `)
+    }
 }
 
 
-
+function playGame (guessObj, wrongCount) {
+    console.log(guessObj)
+    console.log(wrongCount)
+    printHangman(wrongCount)
+}
 
 
 function main() {
     let menuNum = mainMenu()
     let guessObj = getWords(menuNum)
-    playGame(guessObj)
+    playGame(guessObj, wrongCount)
 }
-
-
-
-/*
-console.log(`
-        __________
-        | /      |
-        |/       0
-        |     ---|---
-        |        |
-        |       / \\
-        |      /   \\
-        |
-    ____|___________`)
-
-    */
