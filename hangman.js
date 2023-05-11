@@ -3,7 +3,8 @@ console.clear()
 
 let alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
                 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-let incorrect = []
+let correctGuesses = []
+let incorrectGuesses = []
 let wrongCount = 0
 
 main()
@@ -61,7 +62,6 @@ function enterWords () {
 
 
 function printHangman (wrongCount) {
-    console.log(wrongCount)
     switch (wrongCount) {
         case 0:
             console.log(`
@@ -79,6 +79,7 @@ function printHangman (wrongCount) {
            |___________________________|
    
             `)
+            break
         case 1:
             console.log(`
             ___________________________
@@ -95,6 +96,7 @@ function printHangman (wrongCount) {
            |___________________________|
    
             `)
+            break
         case 2:
             console.log(`
             ___________________________
@@ -111,6 +113,7 @@ function printHangman (wrongCount) {
            |___________________________|
    
             `)
+            break
         case 3:
             console.log(`
             ___________________________
@@ -127,6 +130,7 @@ function printHangman (wrongCount) {
            |___________________________|
    
             `)
+            break
         case 4:
             console.log(`
             ___________________________
@@ -143,6 +147,7 @@ function printHangman (wrongCount) {
            |___________________________|
    
             `)
+            break
         case 5:
             console.log(`
             ___________________________
@@ -159,6 +164,7 @@ function printHangman (wrongCount) {
            |___________________________|
    
             `)
+            break
         case 6:
             console.log(`
             ___________________________
@@ -175,6 +181,7 @@ function printHangman (wrongCount) {
            |___________________________|
    
             `)
+            break
         case 7:
             console.log(`
             ___________________________
@@ -191,6 +198,7 @@ function printHangman (wrongCount) {
            |___________________________|
    
             `)
+            break
         case 8:
             console.log(`
             ___________________________
@@ -207,14 +215,52 @@ function printHangman (wrongCount) {
            |___________________________|
    
             `)
+            break
     }
 }
 
 
+function printGuessed (wrongCount, incorrectGuesses) {
+    console.log(`Incorrect guesses: ${wrongCount} / 8`)
+    console.log(`Incorrectly guessed letters: ${incorrectGuesses}\n`)
+}
+
+function checkLetter (string, guessedLetter, correctGuesses, incorrectGuesses) {
+    
+}
+
+
+function maskLetters(string) {
+    let masked = []
+    string = string.split(' ')
+
+    for (let i = 0; i < string.length; i++) {
+        let letters = string[i].split('')
+        for (let j = 0; j < letters.length; j++) {
+            if (letters[j].toLowerCase() !== letters[j].toUpperCase()) {
+                letters[j] = '.'
+            }
+        }
+        masked.push(letters.join(''))
+    }
+    return masked.join(' ')
+}
+
+
+
+
 function playGame (guessObj, wrongCount) {
-    console.log(guessObj)
-    console.log(wrongCount)
-    printHangman(wrongCount)
+    let maskedWord = maskLetters(guessObj.words)
+
+    while (wrongCount <= 8) {
+        console.clear()
+        printHangman(wrongCount)
+        console.log(`${maskedWord}      Category: ${guessObj.category}\n`)
+        printGuessed(wrongCount, incorrectGuesses)
+        let guessedLetter = prompt('Please enter letter to guess: ')
+        //checkLetter(maskedWord, guessedLetter, correctGuesses, incorrectGuesses)
+    }
+    
 }
 
 
