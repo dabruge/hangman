@@ -7,7 +7,7 @@ let wrongCount = 0
 
 main()
 
-
+// Prints main menu. Prompts user to enter menu selection until valid option chosen
 function mainMenu () {
     let menuChoice = 0
 
@@ -58,7 +58,7 @@ function enterWords () {
     console.log(`\n`)
     let guessInfo = {}
     guessInfo.words = prompt('Please enter text to be guessed: ').toUpperCase()
-    console.log(`\n`)
+    console.log(`\n`)    
     guessInfo.category = prompt('Please enter category of entry (optional): ')
     return guessInfo
 }
@@ -274,6 +274,9 @@ function playGame (guessObj) {
         }
         if (wrongCount < 8) {
             let guessedLetter = prompt('    Please enter letter to guess: ').toUpperCase()
+            if (guessedLetter.length > 1) {
+                playGame(guessObj)
+            }
             checkLetter(maskedWord, guessObj.words, guessedLetter, incorrectGuesses)
         } else {
             console.log('    G A M E   O V E R !')
